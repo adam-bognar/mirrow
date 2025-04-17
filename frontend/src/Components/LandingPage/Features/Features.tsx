@@ -1,5 +1,5 @@
 import { Calendar, Search, Shield } from "lucide-react";
-import { motion, useInView } from "framer-motion"; // or @motionone/react
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 export function Features() {
