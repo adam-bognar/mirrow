@@ -10,7 +10,7 @@ export function AppointmentDetails({title, date}: Props) {
     return(
         <div className={"relative flex flex-col bg-white rounded-xl shadow-lg w-[300px] sm:w-[400px] z-10"}>
 
-                    <div class={"flex flex-row bg-teal-500 rounded-t-xl p-5 items-center "}>
+                    <div className={"flex flex-row bg-teal-500 rounded-t-xl p-5 items-center "}>
                         <Calendar size={20} className={"text-white"} />
                         <h2 className={"text-white font-semibold text-xl pl-3"}>Appointment Details</h2>
                     </div>
