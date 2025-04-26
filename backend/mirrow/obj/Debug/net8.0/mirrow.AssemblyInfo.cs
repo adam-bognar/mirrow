@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("mirrow")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ebdc98bb67cd8135ff9ad6f8b011d1e6de7518c8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c0c6ee2aefa1bf8c93995665e1fbe41c7379e036")]
 [assembly: System.Reflection.AssemblyProductAttribute("mirrow")]
 [assembly: System.Reflection.AssemblyTitleAttribute("mirrow")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

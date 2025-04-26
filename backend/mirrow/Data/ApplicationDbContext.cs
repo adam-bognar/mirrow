@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using mirrow.Models;
 
 namespace mirrow.Data
 {
@@ -9,9 +10,12 @@ namespace mirrow.Data
             : base(options)
         {
         }
+        public DbSet<UserProfile> UserProfiles { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+
 
         }
     }
