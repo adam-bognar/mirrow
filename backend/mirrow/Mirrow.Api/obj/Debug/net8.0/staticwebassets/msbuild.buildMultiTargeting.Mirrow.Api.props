@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Mirrow.Api.props" />
+</Project>
