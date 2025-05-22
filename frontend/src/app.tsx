@@ -3,6 +3,7 @@ import { Route, Router } from "wouter";
 import { LandingPage } from "./Pages/LandingPage";
 import { SigninPage } from "./Pages/SigninPage";
 import { SignupPage } from "./Pages/SignupPage";
+import { RegisterBusiness } from "./Pages/RegisterBusiness";
 
 
 export function App() {
@@ -10,11 +11,12 @@ export function App() {
   return (
     <div>
 
-         <Router>
+         {/* <Router>
             <Route path="/" component={LandingPage} />
             <Route path="/signin" component={SigninPage} />
             <Route path="/signup" component={SignupPage} />
-         </Router>
+         </Router> */}
+         <RegisterBusiness />
     </div>
   )
 }
