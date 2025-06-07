@@ -9,7 +9,11 @@ import { CustomDropdown, CustomDropdownItem, CustomDropdownLabel, CustomDropdown
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export function Navbar() {
-    const [isloggedIn, setLoggedIn] = useState(true);
+    const isloggedIn = useState(true)[0]; // Using [0] to get only the value, not the setter
+    // Mock function to check if user has businesses - in real app this would come from API/context
+    // If hasBusiness is true, navigate to /business-management where user can select which business to manage
+    // If hasBusiness is false, navigate directly to /register-business to create their first business
+    const hasBusiness = true; // Change to false to test the register flow
 
     return (
         <header className={"flex flex-row bg-[#feffff] justify-between items-center p-4 border-b border-gray-100 "}>
@@ -19,9 +23,9 @@ export function Navbar() {
             </div>
             {
                 isloggedIn ? (
-                    <div className="flex flex-row items-center gap-4">
-                        <Button variant="outline" size="sm" className="bg-brand-500 text-black hover:bg-brand-600" asChild>
-                            <Link to="/business-register">
+                    <div className="flex flex-row items-center gap-4">                  
+                          <Button variant="outline" size="sm" className="bg-brand-500 text-black hover:bg-brand-600" asChild>
+                            <Link to={hasBusiness ? "/business-management" : "/register-business"}>
                                 <Briefcase className="h-4 w-4 mr-1" /> Manage Business
                             </Link>
                         </Button>
