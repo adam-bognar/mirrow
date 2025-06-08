@@ -2,6 +2,7 @@ import { useState, useEffect } from "preact/hooks";
 import { Building2, Calendar, Users, TrendingUp, DollarSign, Settings, ArrowLeft } from "lucide-react";
 import { Navbar } from "../Components/Navbar/Navbar";
 import { BusinessSettings } from "../Components/BusinessSettings/BusinessSettings";
+import { TabNavigation } from "../Components/TabNavigation/TabNavigation";
 import { Link, useParams } from "wouter";
 
 interface Business {
@@ -16,11 +17,24 @@ interface Business {
 
 export function BusinessDashboard() {
     const params = useParams();
-    const businessId = params.id;
-      // Mock data - in real app this would come from API based on businessId
+    const businessId = params.id;    // Mock data - in real app this would come from API based on businessId
     const [business, setBusiness] = useState<Business | null>(null);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-    const [activeTab, setActiveTab] = useState('overview');
+    const [currentTab, setCurrentTab] = useState('overview');
+
+    const tabs = [
+        { id: 'overview', label: 'Overview' },
+        { id: 'settings', label: 'Settings' },
+        { id: 'business-hours', label: 'Business Hours' },
+        { id: 'notifications', label: 'Notifications' },
+        { id: 'advanced', label: 'Advanced' }
+    ];
+
+    const handleTabChange = (tabId: string) => {
+        setCurrentTab(tabId);
+        console.log('Tab changed to:', tabId);
+        // You can add logic here to show different content based on the active tab
+    };
 
     const handleSaveSettings = (updatedBusiness: Business) => {
         setBusiness(updatedBusiness);
@@ -82,59 +96,15 @@ export function BusinessDashboard() {
                         >
                             <Settings className="h-4 w-4" />
                             Settings
-                        </button>                    </div>                    {/* Navigation Tabs */}
-                    <div className="flex flex-row items-center gap-2 mb-8 bg-white rounded-lg p-2 shadow-sm border border-gray-100">
-                        <button 
-                            onClick={() => setActiveTab('overview')}
-                            className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                                activeTab === 'overview' 
-                                    ? 'text-teal-600 bg-teal-50 border border-teal-200' 
-                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800'
-                            }`}
-                        >
-                            Overview
-                        </button>
-                        <button 
-                            onClick={() => setActiveTab('settings')}
-                            className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                                activeTab === 'settings' 
-                                    ? 'text-teal-600 bg-teal-50 border border-teal-200' 
-                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800'
-                            }`}
-                        >
-                            Settings
-                        </button>
-                        <button 
-                            onClick={() => setActiveTab('business-hours')}
-                            className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                                activeTab === 'business-hours' 
-                                    ? 'text-teal-600 bg-teal-50 border border-teal-200' 
-                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800'
-                            }`}
-                        >
-                            Business Hours
-                        </button>
-                        <button 
-                            onClick={() => setActiveTab('notifications')}
-                            className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                                activeTab === 'notifications' 
-                                    ? 'text-teal-600 bg-teal-50 border border-teal-200' 
-                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800'
-                            }`}
-                        >
-                            Notifications
-                        </button>
-                        <button 
-                            onClick={() => setActiveTab('advanced')}
-                            className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                                activeTab === 'advanced' 
-                                    ? 'text-teal-600 bg-teal-50 border border-teal-200' 
-                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800'
-                            }`}
-                        >
-                            Advanced
-                        </button>
-                    </div>
+                        </button>                    </div>
+
+                    {/* Navigation Tabs */}
+                    <TabNavigation 
+                        tabs={tabs}
+                        defaultActiveTab="overview"
+                        onTabChange={handleTabChange}
+                        className="mb-8"
+                    />
 
                     {/* Stats Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
