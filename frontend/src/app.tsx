@@ -6,6 +6,9 @@ import { SignupPage } from "./Pages/SignupPage";
 import { RegisterBusiness } from "./Pages/RegisterBusiness";
 import { BusinessManagement } from "./Pages/BusinessManagement";
 import { BusinessDashboard } from "./Pages/BusinessDashboard";
+import { BusinessCalendar } from "./Pages/BusinessCalendar";
+import { CustomerManagement } from "./Pages/CustomerManagement";
+import { BusinessAnalytics } from "./Pages/BusinessAnalytics";
 
 
 export function App() {
@@ -20,6 +23,9 @@ export function App() {
             <Route path="/register-business" component={RegisterBusiness} />
             <Route path="/business-management" component={BusinessManagement} />
             <Route path="/business-dashboard/:id" component={BusinessDashboard} />
+            <Route path="/business-calendar/:id" component={BusinessCalendar} />
+            <Route path="/customer-management/:id" component={CustomerManagement} />
+            <Route path="/business-analytics/:id" component={BusinessAnalytics} />
          </Router>
     </div>
   )

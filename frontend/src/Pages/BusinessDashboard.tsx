@@ -124,25 +124,29 @@ export function BusinessDashboard() {
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    {/* Quick Actions */}
+                    </div>                    {/* Quick Actions */}
                     <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-8">
                         <div className="p-6">
                             <h2 className="text-xl font-semibold text-gray-800 mb-4">Quick Actions</h2>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <button className="flex items-center justify-center gap-2 p-4 border border-teal-200 rounded-lg hover:bg-teal-50 transition-colors">
-                                    <Calendar className="h-5 w-5 text-teal-600" />
-                                    <span className="font-medium text-gray-700">View Calendar</span>
-                                </button>
-                                <button className="flex items-center justify-center gap-2 p-4 border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors">
-                                    <Users className="h-5 w-5 text-blue-600" />
-                                    <span className="font-medium text-gray-700">Manage Customers</span>
-                                </button>
-                                <button className="flex items-center justify-center gap-2 p-4 border border-green-200 rounded-lg hover:bg-green-50 transition-colors">
-                                    <TrendingUp className="h-5 w-5 text-green-600" />
-                                    <span className="font-medium text-gray-700">View Analytics</span>
-                                </button>
+                                <Link to={`/business-calendar/${business.id}`}>
+                                    <button className="flex items-center justify-center gap-2 p-4 border border-teal-200 rounded-lg hover:bg-teal-50 transition-colors w-full">
+                                        <Calendar className="h-5 w-5 text-teal-600" />
+                                        <span className="font-medium text-gray-700">View Calendar</span>
+                                    </button>
+                                </Link>
+                                <Link to={`/customer-management/${business.id}`}>
+                                    <button className="flex items-center justify-center gap-2 p-4 border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors w-full">
+                                        <Users className="h-5 w-5 text-blue-600" />
+                                        <span className="font-medium text-gray-700">Manage Customers</span>
+                                    </button>
+                                </Link>
+                                <Link to={`/business-analytics/${business.id}`}>
+                                    <button className="flex items-center justify-center gap-2 p-4 border border-green-200 rounded-lg hover:bg-green-50 transition-colors w-full">
+                                        <TrendingUp className="h-5 w-5 text-green-600" />
+                                        <span className="font-medium text-gray-700">View Analytics</span>
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
