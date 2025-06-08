@@ -1,6 +1,7 @@
 import { useState, useEffect } from "preact/hooks";
 import { Building2, Calendar, Users, TrendingUp, DollarSign, Settings, ArrowLeft } from "lucide-react";
 import { Navbar } from "../Components/Navbar/Navbar";
+import { BusinessSettings } from "../Components/BusinessSettings/BusinessSettings";
 import { Link, useParams } from "wouter";
 
 interface Business {
@@ -16,9 +17,16 @@ interface Business {
 export function BusinessDashboard() {
     const params = useParams();
     const businessId = params.id;
-    
-    // Mock data - in real app this would come from API based on businessId
+      // Mock data - in real app this would come from API based on businessId
     const [business, setBusiness] = useState<Business | null>(null);
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const [activeTab, setActiveTab] = useState('overview');
+
+    const handleSaveSettings = (updatedBusiness: Business) => {
+        setBusiness(updatedBusiness);
+        console.log('Business settings updated:', updatedBusiness);
+        // In a real app, you would make an API call here to save the changes
+    };
 
     useEffect(() => {
         // Mock API call to get business details
@@ -68,10 +76,63 @@ export function BusinessDashboard() {
                                 <p className="text-gray-500">{business.type}</p>
                             </div>
                         </div>
-                        
-                        <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-200">
+                          <button 
+                            onClick={() => setIsSettingsOpen(true)}
+                            className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-200"
+                        >
                             <Settings className="h-4 w-4" />
                             Settings
+                        </button>                    </div>                    {/* Navigation Tabs */}
+                    <div className="flex flex-row items-center gap-2 mb-8 bg-white rounded-lg p-2 shadow-sm border border-gray-100">
+                        <button 
+                            onClick={() => setActiveTab('overview')}
+                            className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                                activeTab === 'overview' 
+                                    ? 'text-teal-600 bg-teal-50 border border-teal-200' 
+                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800'
+                            }`}
+                        >
+                            Overview
+                        </button>
+                        <button 
+                            onClick={() => setActiveTab('settings')}
+                            className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                                activeTab === 'settings' 
+                                    ? 'text-teal-600 bg-teal-50 border border-teal-200' 
+                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800'
+                            }`}
+                        >
+                            Settings
+                        </button>
+                        <button 
+                            onClick={() => setActiveTab('business-hours')}
+                            className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                                activeTab === 'business-hours' 
+                                    ? 'text-teal-600 bg-teal-50 border border-teal-200' 
+                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800'
+                            }`}
+                        >
+                            Business Hours
+                        </button>
+                        <button 
+                            onClick={() => setActiveTab('notifications')}
+                            className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                                activeTab === 'notifications' 
+                                    ? 'text-teal-600 bg-teal-50 border border-teal-200' 
+                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800'
+                            }`}
+                        >
+                            Notifications
+                        </button>
+                        <button 
+                            onClick={() => setActiveTab('advanced')}
+                            className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                                activeTab === 'advanced' 
+                                    ? 'text-teal-600 bg-teal-50 border border-teal-200' 
+                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800'
+                            }`}
+                        >
+                            Advanced
                         </button>
                     </div>
 
@@ -185,9 +246,18 @@ export function BusinessDashboard() {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div>                </div>
             </main>
+            
+            {/* Business Settings Modal */}
+            {business && (
+                <BusinessSettings
+                    business={business}
+                    isOpen={isSettingsOpen}
+                    onClose={() => setIsSettingsOpen(false)}
+                    onSave={handleSaveSettings}
+                />
+            )}
         </>
     );
 }

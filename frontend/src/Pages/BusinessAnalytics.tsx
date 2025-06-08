@@ -252,7 +252,7 @@ export function BusinessAnalytics() {
                     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
                         <h3 className="text-lg font-semibold text-gray-800 mb-6">Revenue Trend</h3>
                         <div className="h-64 flex items-end justify-between space-x-2">
-                            {analytics.monthlyData.map((data, index) => {
+                            {analytics.monthlyData.map((data) => {
                                 const maxRevenue = Math.max(...analytics.monthlyData.map(d => d.revenue));
                                 const height = (data.revenue / maxRevenue) * 100;
                                 
