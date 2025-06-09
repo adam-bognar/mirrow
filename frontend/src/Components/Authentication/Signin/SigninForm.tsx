@@ -1,6 +1,48 @@
 import { Calendar } from "lucide-react";
+import { Link, useLocation } from "wouter";
+import { useState } from "preact/hooks";
+import { login } from "../../../api/api"; // Import the login function
 
 export function SigninForm() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [, navigate] = useLocation();
+
+    const handleSubmit = async (event: Event) => {
+        event.preventDefault();
+        setIsLoading(true);
+        setError(null);
+
+        if (!email || !password) {
+            setError("Email and password are required.");
+            setIsLoading(false);
+            return;
+        }
+
+        try {
+            await login(email, password, true);
+            navigate("/");
+        } catch (err: any) {
+            if (err.response && err.response.data && err.response.data.errors) {
+                const messages = err.response.data.errors
+                    .map((e: any) => e.description || e.code)
+                    .join(", ");
+                setError(messages || "Login failed. Please check your credentials.");
+            } else if (err.response && err.response.status === 400 && err.response.data?.message) {
+                setError(err.response.data.message);
+            } else if (err.message) {
+                setError(err.message);
+            } else {
+                setError("Login failed. Please check your credentials.");
+            }
+            console.error("Login error:", err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <div className="w-full h-full">
             {/* Background blobs for visual effect */}
@@ -49,7 +91,7 @@ export function SigninForm() {
                     <div className="w-full h-[1px] bg-gray-200"></div>
                 </div>
 
-                <form className="w-full space-y-4">
+                <form className="w-full space-y-4" onSubmit={handleSubmit}>
                     <div className="space-y-4">
                         <div>
                             <label htmlFor="email" className="text-sm text-gray-700 font-medium">Email</label>
@@ -57,8 +99,11 @@ export function SigninForm() {
                                 <input
                                     type="email"
                                     id="email"
+                                    value={email}
+                                    onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
                                     className="w-full bg-white border border-gray-300 rounded-md py-2 px-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                                     placeholder="name@company.com"
+                                    required
                                 />
                             </div>
                         </div>
@@ -69,8 +114,11 @@ export function SigninForm() {
                                 <input
                                     type="password"
                                     id="password"
+                                    value={password}
+                                    onInput={(e) => setPassword((e.target as HTMLInputElement).value)}
                                     className="w-full bg-white border border-gray-300 rounded-md py-2 px-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                                     placeholder="••••••••"
+                                    required
                                 />
                             </div>
                         </div>
@@ -80,6 +128,7 @@ export function SigninForm() {
                                 <input
                                     id="remember"
                                     type="checkbox"
+                                    // Add state and handler for "Remember me" if needed
                                     className="h-4 w-4 text-teal-500 border-gray-300 rounded focus:ring-teal-500"
                                 />
                                 <label htmlFor="remember" className="ml-2 block text-sm text-gray-600">
@@ -97,16 +146,22 @@ export function SigninForm() {
                     <div className="pt-4">
                         <button
                             type="submit"
-                            className="w-full py-2.5 rounded-md bg-teal-500 hover:bg-teal-600 text-white font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors duration-200"
+                            disabled={isLoading}
+                            className="w-full py-2.5 rounded-md cursor-pointer bg-teal-500 hover:bg-teal-600 text-white font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            Sign in
+                            {isLoading ? "Signing in..." : "Sign in"}
                         </button>
                     </div>
                 </form>
+                {error && (
+                    <div className="mt-4 text-center text-sm text-red-600 bg-red-100 p-3 rounded-md">
+                        <p>{error}</p>
+                    </div>
+                )}
 
                 <div className="mt-6 text-center">
                     <p className="text-sm text-gray-600">
-                        Don't have an account? <a href="#" className="text-teal-600 hover:text-teal-800 font-medium">Sign up</a>
+                        Don't have an account? <Link to="/signup" className="text-teal-600 hover:text-teal-800 font-medium">Register here</Link>
                     </p>
                 </div>
             </div>

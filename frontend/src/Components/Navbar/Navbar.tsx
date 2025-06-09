@@ -1,19 +1,53 @@
-import { useState } from "preact/hooks";
+import { useState, useEffect } from "preact/hooks";
 import { AuthButtons } from "./AuthButtons/AuthButtons";
 import { Logo } from "./Logo/Logo";
 import { NavLinks } from "./NavLinks/NavLinks";
 import { Briefcase, User } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Button } from "../ui/button";
 import { CustomDropdown, CustomDropdownItem, CustomDropdownLabel, CustomDropdownSeparator } from "../ui/custom-dropdown";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { checkAuthStatus, logoutUser } from "../../api/api"; // Import API functions
 
 export function Navbar() {
-    const isloggedIn = useState(true)[0]; // Using [0] to get only the value, not the setter
+    const [isloggedIn, setIsLoggedIn] = useState(false); 
+    const [, navigate] = useLocation(); // For programmatic navigation
+
     // Mock function to check if user has businesses - in real app this would come from API/context
     // If hasBusiness is true, navigate to /business-management where user can select which business to manage
     // If hasBusiness is false, navigate directly to /register-business to create their first business
     const hasBusiness = true; // Change to false to test the register flow
+
+    useEffect(() => {
+        const verifyAuth = async () => {
+            try {
+                const isAuthenticated = await checkAuthStatus();
+                setIsLoggedIn(isAuthenticated);
+                if (isAuthenticated) {
+                    // If your checkAuthStatus returns user data, you can set it here
+                    // For now, assuming it just returns true/false based on your backend
+                    // setUserData(someUserData); 
+                } 
+            } catch (error) {
+                console.error("Error checking authentication status:", error);
+                setIsLoggedIn(false);
+            }
+        };
+
+        verifyAuth();
+    }, []); // Empty dependency array: runs once on mount
+
+    const handleLogout = async () => {
+        try {
+            await logoutUser();
+            setIsLoggedIn(false);
+            navigate("/"); // Redirect to home or login page after logout
+            console.log("User logged out");
+        } catch (error) {
+            console.error("Logout failed:", error);
+            // Optionally, show a notification to the user
+        }
+    };
 
     return (
         <header className={"flex flex-row bg-[#feffff] justify-between items-center p-4 border-b border-gray-100 "}>
@@ -55,9 +89,7 @@ export function Navbar() {
                                     <Link to="/favorites">Favorites</Link>
                                 </CustomDropdownItem>
                                 <CustomDropdownSeparator />
-                                <CustomDropdownItem onClick={() => {
-                                    /* log out logic here */
-                                }}>
+                                <CustomDropdownItem onClick={handleLogout}>
                                     Log out
                                 </CustomDropdownItem>
                             </>
