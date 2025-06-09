@@ -13,6 +13,28 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins(
+            "http://localhost:5173"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    });
+});
+
+builder.Services.ConfigureApplicationCookie(opt =>
+{
+    opt.Cookie.Name = "mirrow.auth";
+    opt.Cookie.SecurePolicy = CookieSecurePolicy.Always;   
+    opt.Cookie.SameSite = SameSiteMode.None;           
+    opt.SlidingExpiration = true;
+});
+
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -30,20 +52,6 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(CreateBusinessHandler).Assembly));
 builder.Services.AddAutoMapper(typeof(BusinessProfile).Assembly);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -85,9 +93,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapIdentityApi<IdentityUser>();
+app.MapIdentityApi<IdentityUser>()
+    .RequireCors("AllowFrontend");
+
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowFrontend");
+
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

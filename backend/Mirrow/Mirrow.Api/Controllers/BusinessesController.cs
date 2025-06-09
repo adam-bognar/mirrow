@@ -30,10 +30,12 @@ namespace Mirrow.Api.Controllers
             var cmd = new CreateBusinessCommand(
             userId,
             dto.Name,
+            dto.Type,
             dto.Description,
-            dto.Location,
+            dto.Address,
+            dto.City,
             dto.PhoneNumber,
-            dto.ImageUrl
+            dto.Email
         );
 
             var id = await _mediator.Send(cmd);

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Mirrow.Application.Dtos;
@@ -17,6 +18,13 @@ namespace Mirrow.Api.Controllers
 
         public AccountController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         => (_context, _userManager) = (context, userManager);
+
+        [Authorize]                // blocks unauthenticated requests
+        [HttpGet("is-authenticated")]
+        public IActionResult IsAuthenticated()
+        {
+            return Ok(true);
+        }
 
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync(RegisterDto dto)

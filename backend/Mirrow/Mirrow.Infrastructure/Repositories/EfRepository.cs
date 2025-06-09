@@ -23,7 +23,6 @@ namespace Mirrow.Infrastructure.Repositories
         public Task<IReadOnlyList<T>> ListAsync() =>
             _ctx.Set<T>().ToListAsync().ContinueWith(task => (IReadOnlyList<T>) task.Result);
 
-        // ← implement the filtered version:
         public Task<IReadOnlyList<T>> ListAsync(Expression<Func<T, bool>> predicate) =>
             _ctx.Set<T>().Where(predicate).ToListAsync().ContinueWith(task => (IReadOnlyList<T>)task.Result);
 
