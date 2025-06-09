@@ -11,9 +11,11 @@ namespace Mirrow.Application.Commands
     public record CreateBusinessCommand(
         string UserId,
         string Name,
+        string Type,
         string Description,
-        string Location,
+        string Address,
+        string City,
         string? PhoneNumber,
-        string? ImageUrl
+        string? Email
         ) : IRequest<Guid>;
 }

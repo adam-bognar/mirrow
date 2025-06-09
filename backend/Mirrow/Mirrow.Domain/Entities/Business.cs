@@ -12,9 +12,12 @@ namespace Mirrow.Domain.Entities
         public Guid Id { get; private set; }
         
         public string Name { get; private set; } = null!;
+        public string Type { get; private set; } = null!;
         public string Description { get; private set; } = null!;
-        public string Location { get; private set; } = null!;
+        public string Address { get; private set; } = null!;
+        public string City { get; private set; } = null!;
         public string? PhoneNumber { get; private set; }
+        public string? Email{ get; private set; }
         public string? ImageUrl { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
@@ -24,18 +27,24 @@ namespace Mirrow.Domain.Entities
         public Business(
             string ownerId,
             string name,
+            string type,
             string description,
-            string location,
+            string address,
+            string city,
             string? phoneNumber,
+            string? email,
             string? imageUrl)
         {
             Id = Guid.NewGuid();
             OwnerId = ownerId;
             Name = name;
+            Type = type;
             Description = description;
-            Location = location;
+            Address = address;
+            City = city;
             PhoneNumber = phoneNumber;
-            ImageUrl = imageUrl;
+            Email = email;
+            ImageUrl = /*imageUrl*/ "";
             CreatedAt = DateTime.UtcNow;
         }
     }

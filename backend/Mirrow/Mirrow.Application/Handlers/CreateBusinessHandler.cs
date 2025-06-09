@@ -31,10 +31,13 @@ namespace Mirrow.Application.Handlers
             var business = new Business(
                 dto.UserId,
                 dto.Name,
+                dto.Type,
                 dto.Description,
-                dto.Location,
+                dto.Address,
+                dto.City,
                 dto.PhoneNumber,
-                dto.ImageUrl
+                dto.Email,
+                "" //TODO IMAGE URL
                 );
 
             await _businesses.AddAsync( business );

@@ -34,20 +34,6 @@ builder.Services.AddAutoMapper(typeof(BusinessProfile).Assembly);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme

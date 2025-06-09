@@ -43,9 +43,8 @@ namespace Mirrow.Infrastructure.Data
                  .HasMaxLength(450)
                  .IsRequired();
 
-                // ✅ tie NAVIGATION (Owner) to FK (OwnerId) in one definition
-                b.HasOne(x => x.Owner)          // ← use the nav-lambda
-                 .WithMany()                    //  or .WithMany(u => u.Businesses)
+                b.HasOne(x => x.Owner)         
+                 .WithMany()                    
                  .HasForeignKey(x => x.OwnerId)
                  .OnDelete(DeleteBehavior.Cascade);
             });
