@@ -1,15 +1,7 @@
+import { Business } from "@/api/models";
 import { Calendar, Users, DollarSign, TrendingUp } from "lucide-react";
 import { Link } from "wouter";
 
-interface Business {
-    id: string;
-    name: string;
-    type: string;
-    location: string;
-    phoneNumber?: string;
-    imageUrl?: string;
-    createdAt: string;
-}
 
 type Props = {
     business: Business;

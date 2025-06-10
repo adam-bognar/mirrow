@@ -56,7 +56,6 @@ export const checkAuthStatus = async () => {
     }
 };
 
-// New function for logging out
 export const logoutUser = async () => {
     try {
         // IMPORTANT: You'll need to implement this POST /api/account/logout endpoint in your ASP.NET Core backend
@@ -67,6 +66,18 @@ export const logoutUser = async () => {
         return response.data;
     } catch (error) {
         console.error('Error logging out user:', error);
+        throw error;
+    }
+};
+
+export const getBusinesses = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/api/account/businesses`, {
+            withCredentials: true 
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching businesses:', error);
         throw error;
     }
 };

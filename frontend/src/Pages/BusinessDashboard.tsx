@@ -9,16 +9,9 @@ import { BusinessInformation } from "@/Components/Business/BusinessInformation";
 import { BusinessHours } from "@/Components/Business/BusinessHours";
 import { BusinessNotifications } from "@/Components/Business/BusinessNotifications";
 import { BusinessAdvanced } from "@/Components/Business/BusinessAdvanced";
+import { Business } from "@/api/models";
 
-interface Business {
-    id: string;
-    name: string;
-    type: string;
-    location: string;
-    phoneNumber?: string;
-    imageUrl?: string;
-    createdAt: string;
-}
+
 
 export function BusinessDashboard() {
     const params = useParams();
@@ -81,10 +74,14 @@ export function BusinessDashboard() {
         // Mock API call to get business details
         const mockBusiness: Business = {
             id: businessId || "1",
+            ownerId: "owner123",
             name: "Elite Hair Salon",
-            type: "Hair Salon",
-            location: "123 Main St, City Center",
+            description: "Your go-to place for the best haircuts and styling in town.",
+            address: "123 Main St",
+            city: "City Center",
             phoneNumber: "+1 (555) 123-4567",
+            email: "info@elitehairsalon.com",
+            imageUrl: "https://example.com/business-image.jpg",
             createdAt: "2024-01-15"
         };
         setBusiness(mockBusiness);
@@ -122,7 +119,7 @@ export function BusinessDashboard() {
                             </div>
                             <div className="ml-3">
                                 <h1 className="text-3xl font-bold text-gray-800">{business.name}</h1>
-                                <p className="text-gray-500">{business.type}</p>
+                                <p className="text-gray-500">{}</p>
                             </div>
                         </div>
                         <button
