@@ -11,8 +11,10 @@ namespace Mirrow.Application.Dtos
         string OwnerId,
         string Name,
         string Description,
-        string Location,
+        string Address,
+        string City,
         string? PhoneNumber,
+        string? Email,
         string? ImageUrl,
         DateTime CreatedAt
         );
