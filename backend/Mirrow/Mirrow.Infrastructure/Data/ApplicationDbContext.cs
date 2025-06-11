@@ -12,7 +12,7 @@ namespace Mirrow.Infrastructure.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<TodoItem> Todos => Set<TodoItem>();
         public DbSet<UserProfile> UserProfiles => Set<UserProfile>();
@@ -43,11 +43,23 @@ namespace Mirrow.Infrastructure.Data
                  .HasMaxLength(450)
                  .IsRequired();
 
-                b.HasOne(x => x.Owner)         
-                 .WithMany()                    
+                b.HasOne(x => x.Owner)
+                 .WithMany()
                  .HasForeignKey(x => x.OwnerId)
                  .OnDelete(DeleteBehavior.Cascade);
             });
+
+            builder.Entity<Review>()
+                .HasOne(r => r.Business)
+                .WithMany(b => b.Reviews)
+                .HasForeignKey(r => r.BusinessId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Review>()
+                .HasOne(r => r.Reviewer)
+                .WithMany()
+                .HasForeignKey(r => r.ReviewerId)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
 

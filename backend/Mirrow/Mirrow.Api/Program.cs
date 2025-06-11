@@ -53,6 +53,10 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(CreateBusinessHandler).Assembly));
 builder.Services.AddAutoMapper(typeof(BusinessProfile).Assembly);
 
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(CreateReviewHandler).Assembly));
+builder.Services.AddAutoMapper(typeof(ReviewProfile).Assembly);
+
 
 
 
