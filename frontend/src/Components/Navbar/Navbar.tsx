@@ -13,6 +13,12 @@ export function Navbar() {
     const [isloggedIn, setIsLoggedIn] = useState(false); 
     const [, navigate] = useLocation(); // For programmatic navigation
 
+    const testing = true;
+
+    if(testing) {
+        setIsLoggedIn(true); // For testing purposes, set logged in state to true
+    }
+
     // Mock function to check if user has businesses - in real app this would come from API/context
     // If hasBusiness is true, navigate to /business-management where user can select which business to manage
     // If hasBusiness is false, navigate directly to /register-business to create their first business
