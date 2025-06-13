@@ -1,5 +1,6 @@
 import { useState } from "preact/hooks";
 import { Clock, Plus, Trash2, Save } from "lucide-react";
+import { Switch } from "../ui/switch";
 
 interface TimeSlot {
     start: string;
@@ -141,13 +142,18 @@ export function BusinessHours() {
                         <div className="flex items-center justify-between mb-3">
                             <div className="flex items-center">
                                 <label className="flex items-center cursor-pointer">
-                                    <input
+                                    {/* <input
                                         type="checkbox"
                                         checked={schedule.isOpen}
                                         onChange={() => handleDayToggle(day as keyof BusinessHoursData)}
                                         className="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500 focus:ring-2"
+                                    /> */}
+                                    <Switch
+                                        checked={schedule.isOpen}
+                                        onCheckedChange={() => handleDayToggle(day as keyof BusinessHoursData)}
+                                        className="data-[state=checked]:bg-teal-600 scale-115"
                                     />
-                                    <span className="ml-3 text-sm font-medium text-gray-700">
+                                    <span className="ml-3 text-base font-medium text-gray-700">
                                         {dayNames[day as keyof typeof dayNames]}
                                     </span>
                                 </label>
