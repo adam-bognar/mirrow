@@ -17,6 +17,8 @@ namespace Mirrow.Infrastructure.Data
         public DbSet<TodoItem> Todos => Set<TodoItem>();
         public DbSet<UserProfile> UserProfiles => Set<UserProfile>();
         public DbSet<Business> Businesses => Set<Business>();
+        public DbSet<Review> Reviews => Set<Review>();
+        public DbSet<BusinessHour> BusinessHours => Set<BusinessHour>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -18,6 +18,8 @@ namespace Mirrow.Domain.Entities
         public TimeOnly Start { get; set; }
         public TimeOnly End { get; set; }
 
+        public BusinessHour() { }
+
         public BusinessHour(Guid businessId, DayOfWeek day, TimeOnly start, TimeOnly end)
         {
             if (start >= end) throw new ArgumentException("Start must be earlier than end");

@@ -34,9 +34,13 @@ namespace Mirrow.Api.Controllers
         }
 
         [HttpPut("{id}/hours")]
-        public async Task<IActionResult> PutHours(Guid id, WeeklyHoursDto dto)
+        public async Task<IActionResult> PutHours(Guid id, [FromBody] WeeklyHoursDto dto)
         {
-            return BadRequest();
+            var ownerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (ownerId is null) return Unauthorized();
+
+            await _mediator.Send(new UpdateBusinessHoursCommand(id, ownerId, dto));
+            return NoContent();
         }
 
         [HttpPost]

@@ -60,6 +60,7 @@ builder.Services.AddAutoMapper(typeof(ReviewProfile).Assembly);
 
 
 
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
