@@ -18,6 +18,31 @@ namespace Mirrow.Api.Controllers
 
         public BusinessesController(IMediator mediator) => _mediator = mediator;
 
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<BusinessDto>> GetById(Guid id)
+        {
+            var dto = await _mediator.Send(new GetBusinessByIdQuery(id));
+            return dto is null ? NotFound() : Ok(dto);
+        }
+
+        [HttpGet("{id}/hours")]
+        public async Task<ActionResult<WeeklyHoursDto>> GetHours(Guid id)
+        {
+            var hours = await _mediator.Send(new GetBusinessHoursQuery(id));
+            return hours is null ? NotFound() : Ok(hours);
+
+        }
+
+        [HttpPut("{id}/hours")]
+        public async Task<IActionResult> PutHours(Guid id, [FromBody] WeeklyHoursDto dto)
+        {
+            var ownerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (ownerId is null) return Unauthorized();
+
+            await _mediator.Send(new UpdateBusinessHoursCommand(id, ownerId, dto));
+            return NoContent();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateBusinessDto dto)
         {
@@ -47,11 +72,6 @@ namespace Mirrow.Api.Controllers
                 );
         }
 
-        [HttpGet("{id:guid}")]
-        public async Task<ActionResult<BusinessDto>> GetById(Guid id)
-        {
-            var dto = await _mediator.Send(new GetBusinessByIdQuery(id));
-            return dto is null ? NotFound() : Ok(dto);
-        }
+        
     }
 }

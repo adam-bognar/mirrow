@@ -1,18 +1,8 @@
 import { Building2, Tag, MapPin, Phone, Mail, FileText, CheckCircle, Save } from "lucide-react";
 import { TextField, SelectField } from "../TextField/text-field";
 import { useState, useEffect } from "preact/hooks";
+import { Business } from "@/api/models";
 
-interface Business {
-    id: string;
-    name: string;
-    type: string;
-    location: string;
-    phoneNumber?: string;
-    email?: string;
-    description?: string;
-    imageUrl?: string;
-    createdAt: string;
-}
 
 interface BusinessInformationProps {
     business?: Business;
@@ -35,9 +25,9 @@ export function BusinessInformation({ business }: BusinessInformationProps) {
         if (business) {
             setFormData({
                 businessName: business.name || "",
-                businessType: business.type || "",
-                address: business.location || "",
-                city: "", // We might need to parse this from location
+                businessType: business.description || "",
+                address: business.address || "",
+                city: business.city || "",
                 phone: business.phoneNumber || "",
                 email: business.email || "",
                 description: business.description || ""

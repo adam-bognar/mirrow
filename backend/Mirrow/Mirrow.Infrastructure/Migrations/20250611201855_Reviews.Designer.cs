@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mirrow.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Mirrow.Infrastructure.Data;
 namespace Mirrow.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250611201855_Reviews")]
+    partial class Reviews
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -270,32 +273,6 @@ namespace Mirrow.Infrastructure.Migrations
                     b.ToTable("Businesses");
                 });
 
-            modelBuilder.Entity("Mirrow.Domain.Entities.BusinessHour", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BusinessId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("DayOfWeek")
-                        .HasColumnType("int");
-
-                    b.Property<TimeOnly>("End")
-                        .HasColumnType("time");
-
-                    b.Property<TimeOnly>("Start")
-                        .HasColumnType("time");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BusinessId", "DayOfWeek", "Start", "End")
-                        .IsUnique();
-
-                    b.ToTable("BusinessHours");
-                });
-
             modelBuilder.Entity("Mirrow.Domain.Entities.Review", b =>
                 {
                     b.Property<Guid>("Id")
@@ -325,7 +302,7 @@ namespace Mirrow.Infrastructure.Migrations
 
                     b.HasIndex("ReviewerId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Review");
                 });
 
             modelBuilder.Entity("Mirrow.Domain.Entities.TodoItem", b =>
@@ -434,17 +411,6 @@ namespace Mirrow.Infrastructure.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Mirrow.Domain.Entities.BusinessHour", b =>
-                {
-                    b.HasOne("Mirrow.Domain.Entities.Business", "Business")
-                        .WithMany("Hours")
-                        .HasForeignKey("BusinessId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Business");
-                });
-
             modelBuilder.Entity("Mirrow.Domain.Entities.Review", b =>
                 {
                     b.HasOne("Mirrow.Domain.Entities.Business", "Business")
@@ -477,8 +443,6 @@ namespace Mirrow.Infrastructure.Migrations
 
             modelBuilder.Entity("Mirrow.Domain.Entities.Business", b =>
                 {
-                    b.Navigation("Hours");
-
                     b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618

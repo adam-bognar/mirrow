@@ -1,15 +1,7 @@
 import { useState } from "preact/hooks";
 import { AlertTriangle, Trash2, Download, Archive, Shield, Key } from "lucide-react";
+import { Business } from "@/api/models";
 
-interface Business {
-    id: string;
-    name: string;
-    type: string;
-    location: string;
-    phoneNumber?: string;
-    imageUrl?: string;
-    createdAt: string;
-}
 
 interface BusinessAdvancedProps {
     business: Business;

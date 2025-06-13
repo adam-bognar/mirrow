@@ -9,16 +9,9 @@ import { BusinessInformation } from "@/Components/Business/BusinessInformation";
 import { BusinessHours } from "@/Components/Business/BusinessHours";
 import { BusinessNotifications } from "@/Components/Business/BusinessNotifications";
 import { BusinessAdvanced } from "@/Components/Business/BusinessAdvanced";
+import { Business } from "@/api/models";
 
-interface Business {
-    id: string;
-    name: string;
-    type: string;
-    location: string;
-    phoneNumber?: string;
-    imageUrl?: string;
-    createdAt: string;
-}
+
 
 export function BusinessDashboard() {
     const params = useParams();
@@ -39,14 +32,14 @@ export function BusinessDashboard() {
         setCurrentTab(tabId);
         console.log('Tab changed to:', tabId);
         // You can add logic here to show different content based on the active tab
-    };    const renderTabContent = () => {
+    }; const renderTabContent = () => {
         switch (currentTab) {
             case 'dashboard':
                 return business ? <BusinessOverview business={business} /> : null;
             case 'settings':
                 return (
                     business ? <BusinessInformation business={business} /> : null
-                );            
+                );
             case 'business-hours':
                 return <BusinessHours />;
             case 'notifications':
@@ -64,7 +57,7 @@ export function BusinessDashboard() {
                 return business ? <BusinessOverview business={business} /> : null;
 
         }
-    };    const handleSaveSettings = (updatedBusiness: Business) => {
+    }; const handleSaveSettings = (updatedBusiness: Business) => {
         setBusiness(updatedBusiness);
         console.log('Business settings updated:', updatedBusiness);
         // In a real app, you would make an API call here to save the changes
@@ -81,10 +74,14 @@ export function BusinessDashboard() {
         // Mock API call to get business details
         const mockBusiness: Business = {
             id: businessId || "1",
+            ownerId: "owner123",
             name: "Elite Hair Salon",
-            type: "Hair Salon",
-            location: "123 Main St, City Center",
+            description: "Your go-to place for the best haircuts and styling in town.",
+            address: "123 Main St",
+            city: "City Center",
             phoneNumber: "+1 (555) 123-4567",
+            email: "info@elitehairsalon.com",
+            imageUrl: "https://example.com/business-image.jpg",
             createdAt: "2024-01-15"
         };
         setBusiness(mockBusiness);
@@ -122,16 +119,10 @@ export function BusinessDashboard() {
                             </div>
                             <div className="ml-3">
                                 <h1 className="text-3xl font-bold text-gray-800">{business.name}</h1>
-                                <p className="text-gray-500">{business.type}</p>
+                                <p className="text-gray-500">{ }</p>
                             </div>
                         </div>
-                        <button
-                            onClick={() => setIsSettingsOpen(true)}
-                            className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-200"
-                        >
-                            <Settings className="h-4 w-4" />
-                            Settings
-                        </button>                    </div>
+                    </div>
 
                     {/* Navigation Tabs */}
                     <TabNavigation
@@ -143,10 +134,6 @@ export function BusinessDashboard() {
 
                     {/*Overview*/}
                     {renderTabContent()}
-                    {/* Some other content */}
-                    {/* Some other content */}
-                    {/* Some other content */}
-                    {/* Some other content */}
 
                 </div>
             </main>

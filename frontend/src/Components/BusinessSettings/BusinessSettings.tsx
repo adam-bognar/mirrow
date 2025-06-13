@@ -8,35 +8,24 @@ import {
     Shield,
     Trash2
 } from "lucide-react";
+import { Business } from "@/api/models";
 
 interface BusinessSettingsProps {
-    business: {
-        id: string;
-        name: string;
-        type: string;
-        location: string;
-        phoneNumber?: string;
-        imageUrl?: string;
-        createdAt: string;
-        email?: string;
-        website?: string;
-        description?: string;
-    };
+    business: Business;
     isOpen: boolean;
     onClose: () => void;
-    onSave: (updatedBusiness: any) => void;
+    onSave: (updatedBusiness: Business) => void;
 }
 
 export function BusinessSettings({ business, isOpen, onClose, onSave }: BusinessSettingsProps) {
     const [activeTab, setActiveTab] = useState('general');
     const [formData, setFormData] = useState({
         name: business.name,
-        type: business.type,
-        location: business.location,
+        description: business.description,
+        address: business.address,
+        city: business.city,
         phoneNumber: business.phoneNumber || '',
         email: business.email || '',
-        website: business.website || '',
-        description: business.description || '',
         imageUrl: business.imageUrl || '',
         // Business hours
         mondayHours: '9:00 AM - 5:00 PM',
@@ -167,7 +156,7 @@ export function BusinessSettings({ business, isOpen, onClose, onSave }: Business
                                                 Business Type
                                             </label>
                                             <select
-                                                value={formData.type}
+                                                value={formData.description}
                                                 onChange={handleInputChange('type')}
                                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                                             >
@@ -183,8 +172,8 @@ export function BusinessSettings({ business, isOpen, onClose, onSave }: Business
                                             </label>
                                             <input
                                                 type="text"
-                                                value={formData.location}
-                                                onChange={handleInputChange('location')}
+                                                value={formData.address}
+                                                onChange={handleInputChange('address')}
                                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                                             />
                                         </div>
@@ -219,8 +208,8 @@ export function BusinessSettings({ business, isOpen, onClose, onSave }: Business
                                             </label>
                                             <input
                                                 type="url"
-                                                value={formData.website}
-                                                onChange={handleInputChange('website')}
+                                                value={formData.imageUrl}
+                                                onChange={handleInputChange('imageUrl')}
                                                 placeholder="https://www.example.com"
                                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                                             />
