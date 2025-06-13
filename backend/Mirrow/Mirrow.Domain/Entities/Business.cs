@@ -25,6 +25,7 @@ namespace Mirrow.Domain.Entities
         public virtual IdentityUser Owner { get; private set; }
 
         public ICollection<Review> Reviews { get; private set; }
+        public ICollection<BusinessHour> Hours { get; private set; }
 
         public Business(
             string ownerId,
@@ -49,6 +50,7 @@ namespace Mirrow.Domain.Entities
             ImageUrl = /*imageUrl*/ "";
             CreatedAt = DateTime.UtcNow;
             Reviews = new List<Review>();
+            Hours = new List<BusinessHour>();
         }
     }
 }

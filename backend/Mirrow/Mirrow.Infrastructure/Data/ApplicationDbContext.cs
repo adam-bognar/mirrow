@@ -61,6 +61,19 @@ namespace Mirrow.Infrastructure.Data
                 .HasForeignKey(r => r.ReviewerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<BusinessHour>(cfg =>
+            {
+                cfg.HasKey(x => x.Id);
+
+                cfg.HasOne(x=> x.Business)
+                .WithMany(b=> b.Hours)
+                .HasForeignKey(b=>b.BusinessId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                cfg.HasIndex(x => new { x.BusinessId, x.DayOfWeek, x.Start, x.End })
+                   .IsUnique();
+            });
+
 
 
         }
